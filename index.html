@@ -361,12 +361,16 @@ google.loader.eval.elements = function() {eval(arguments[0]);};if (google.loader
         };
         // Create an instance on TransliterationControl with the required
         // options.
-        transliterationControl =
-          new google.elements.transliteration.TransliterationControl(options);
+        if (google.elements.transliteration.isBrowserCompatible()) { 
+         transliterationControl =
+            new google.elements.transliteration.TransliterationControl(options);
 
         // Enable transliteration in the textfields with the given ids.
-        var ids = [ "transl1", "transl2" ];
-        transliterationControl.makeTransliteratable(ids);
+          var ids = [ "transl1", "transl2" ];
+          transliterationControl.makeTransliteratable(ids);
+        } else {
+          document.getElementById('errorDiv').innerHTML = 'Sorry! Your browser does not support transliteration';
+        }
 
         // Add the STATE_CHANGED event handler to correcly maintain the state
         // of the checkbox.
